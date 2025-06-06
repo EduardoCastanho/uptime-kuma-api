@@ -790,7 +790,10 @@ class UptimeKumaApi(object):
             kafkaProducerSsl: bool = False,
             kafkaProducerAllowAutoTopicCreation: bool = False,
             kafkaProducerSaslOptions: dict = None,
+            conditions: list = None,
     ) -> dict:
+        if conditions is None:
+            conditions:{}
         if accepted_statuscodes is None:
             accepted_statuscodes = ["200-299"]
 
@@ -823,7 +826,10 @@ class UptimeKumaApi(object):
                 data.update({
                     "invertKeyword": invertKeyword,
                 })
-
+        # default conditions required
+        data.update({
+            "conditions":conditions,
+        })
         # HTTP, KEYWORD, JSON_QUERY, REAL_BROWSER
         data.update({
             "url": url,
@@ -2762,7 +2768,7 @@ class UptimeKumaApi(object):
         :param str, optional chromeExecutable: Chrome/Chromium Executable, defaults to ""
         :param list, optional tlsExpiryNotifyDays: TLS Certificate Expiry. HTTPS Monitors trigger notification when TLS certificate expires in., defaults to None
         :param bool, optional disableAuth: Disable Authentication, defaults to False
-        :param bool, optional trustProxy: Trust Proxy. Trust 'X-Forwarded-\*' headers. If you want to get the correct client IP and your Uptime Kuma is behind such as Nginx or Apache, you should enable this., defaults to False
+        :param bool, optional trustProxy: Trust Proxy. Trust 'X-Forwarded-' headers. If you want to get the correct client IP and your Uptime Kuma is behind such as Nginx or Apache, you should enable this., defaults to False
         :return: The server response.
         :rtype: dict
         :raises UptimeKumaException: If the server returns an error.
