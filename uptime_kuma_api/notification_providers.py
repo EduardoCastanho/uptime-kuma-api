@@ -163,6 +163,18 @@ class NotificationType(str, Enum):
     ZOHOCLIQ = "ZohoCliq"
     """ZohoCliq"""
 
+class TelegramTemplateParseMode(str, Enum):
+
+    """Telegram Template Parse Mode"""
+
+    PLAIN_TEXT= "plain"
+    """Plain Text"""
+
+    HTML= "HTML"
+    """HTML"""
+
+    MARKDOWN = "MarkdownV2"
+    """Markdown"""
 
 notification_provider_options = {
     NotificationType.ALERTA: dict(
@@ -433,6 +445,10 @@ notification_provider_options = {
         telegramProtectContent=dict(type="bool", required=False),
         telegramMessageThreadID=dict(type="str", required=False),
         telegramBotToken=dict(type="str", required=True),
+        telegramUseTemplate=dict(type="bool", required=False),
+        telegramTemplateParseMode=dict(type=TelegramTemplateParseMode, required=False),
+        telegramTemplate=dict(type="str", required=False),
+        telegramServerUrl=dict(type="str", required=False),
     ),
     NotificationType.TWILIO: dict(
         twilioAccountSID=dict(type="str", required=True),
